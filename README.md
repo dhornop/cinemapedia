@@ -1,6 +1,6 @@
 # cinemapedia
 
-Proyecto para el aprendizaje de Flutter del curso de Fernando Herrera.
+App creada para el aprendizaje de Flutter durante el curso de Fernando Herrera.
 
 # Desarrollo
 
