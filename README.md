@@ -1,8 +1,13 @@
 # cinemapedia
 
-App creada para el aprendizaje de Flutter durante el curso de Fernando Herrera.
-
-# Desarrollo
+# Dev
 
 1. Copiar el .env.template y renombrarlo a .env
-2. Especificar la variable de entorno ([The MovieDB](https://www.themoviedb.org/settings/api)).
+
+2. Cambiar las variables de entorno (The MovieDB)
+
+3. Cambios en la entidad, hay que ejecutar el comando
+
+```
+flutter pub run build_runner build
+```
