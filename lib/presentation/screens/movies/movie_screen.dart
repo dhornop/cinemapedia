@@ -9,6 +9,7 @@ import 'package:cinemapedia/presentation/providers/providers.dart';
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-screen';
 
+  // ID de la película
   final String movieId;
 
   const MovieScreen({super.key, required this.movieId});
