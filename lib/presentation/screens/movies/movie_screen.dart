@@ -139,7 +139,7 @@ class _TitleAndOverview extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Imagen
+          //* Portada de la película
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Image.network(
@@ -150,7 +150,7 @@ class _TitleAndOverview extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          // Descripción
+          //* Título y descripción de la película
           SizedBox(
             width: (size.width - 40) * 0.7,
             child: Column(
