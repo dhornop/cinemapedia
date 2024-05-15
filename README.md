@@ -16,9 +16,9 @@ App desarrollada durante el curso de Flutter de Fernando Herrera
 
 ## Instalación y configuración
 
-1. Instalar las dependencias <span style="color: green">__isar__</span> y <span style="color: green">__isar_flutter_libs__</span>:
+1. Instalar las dependencias <span style="color: green">__isar__</span>, <span style="color: green">__isar_flutter_libs__</span> y <span style="color: green">__path_provider__</span>:
 
-    > flutter pub add isar isar_flutter_libs
+    > flutter pub add isar isar_flutter_libs path_provider
 
 2. Instalar las dependencias de desarrollo <span style="color: green">__isar_generator__</span> y <span style="color: green">__build_runner__</span>:
 

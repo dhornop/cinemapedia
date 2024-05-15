@@ -8,6 +8,7 @@ import "package:path_provider/path_provider.dart";
 //? Si en un futuro tuvieramos usáramos otra base de datos (por ejemplo, SQLite), nos crearíamos la implementación del datasource que accediera a dicha base de datos
 
 class IsarDatasource extends LocalStorageDatasource {
+  // El acceso a base de datos no es una tarea asíncrona, debemos esperar a leer y recibir los datos, por lo que no es necesario que sea un Future, debe ser "late"
   late Future<Isar> db;
 
   IsarDatasource() {
@@ -17,6 +18,7 @@ class IsarDatasource extends LocalStorageDatasource {
   Future<Isar> openDB() async {
     final dir = await getApplicationDocumentsDirectory();
     if (Isar.instanceNames.isEmpty) {
+      // Hay que indicar el listado de esquemas a los que queremos acceder. Los esquemas se crean automáticamente cuando ejecutamos flutter pub run build_runner build (Ver Readme)
       return await Isar.open([MovieSchema], inspector: true, directory: dir.path);
     }
 
