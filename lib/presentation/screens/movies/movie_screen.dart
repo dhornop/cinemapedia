@@ -30,10 +30,10 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //! "PANTALLA DE CARGA" MIENTRAS SE OBTIENE EL OBJETO "movie"
+
     // 1) Recogemos de la cache la película con el ID recibido "widget.movieId"
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
-
-    //! "PANTALLA DE CARGA" MIENTRAS SE OBTIENE EL OBJETO "movie"
 
     // 2) Si no tenemos la película (porque no está en la caché y hay que consultarla a la API), mostramos un "Cargando..." mientras se completa el proceso
     if (movie == null) {
@@ -45,7 +45,12 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     return Scaffold(
       body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
-        slivers: [_CustomSliverAppBar(movie: movie), SliverList(delegate: SliverChildBuilderDelegate((context, index) => _MovieDetails(movie: movie), childCount: 1))],
+        slivers: [
+          _CustomSliverAppBar(movie: movie),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) => _MovieDetails(movie: movie), childCount: 1),
+          ),
+        ],
       ),
     );
   }
@@ -100,13 +105,15 @@ class _Genres extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           alignment: WrapAlignment.center,
           children: [
-            ...movie.genreIds.map((gender) => Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: Chip(
-                    label: Text(gender),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  ),
-                ))
+            ...movie.genreIds.map(
+              (gender) => Container(
+                margin: const EdgeInsets.only(right: 10),
+                child: Chip(
+                  label: Text(gender),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -154,7 +161,11 @@ class _TitleAndOverview extends StatelessWidget {
                 const SizedBox(height: 10),
                 MovieRating(voteAverage: movie.voteAverage),
                 Row(
-                  children: [const Text('Estreno:', style: TextStyle(fontWeight: FontWeight.bold)), const SizedBox(width: 5), Text(HumanFormats.shortDate(movie.releaseDate))],
+                  children: [
+                    const Text('Estreno:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(width: 5),
+                    Text(HumanFormats.shortDate(movie.releaseDate)),
+                  ],
                 )
               ],
             ),
@@ -206,7 +217,12 @@ class _CustomSliverAppBar extends ConsumerWidget {
       ],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.only(bottom: 0),
-        title: _CustomGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, stops: const [0.7, 1.0], colors: [Colors.transparent, scaffoldBackgroundColor]),
+        title: _CustomGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.7, 1.0],
+          colors: [Colors.transparent, scaffoldBackgroundColor],
+        ),
         background: Stack(
           children: [
             SizedBox.expand(
@@ -221,22 +237,25 @@ class _CustomSliverAppBar extends ConsumerWidget {
             ),
 
             //* Favorite Gradient Background
-            const _CustomGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, stops: [
-              0.0,
-              0.2
-            ], colors: [
-              Colors.black54,
-              Colors.transparent,
-            ]),
+            const _CustomGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.0, 0.2],
+              colors: [
+                Colors.black54,
+                Colors.transparent,
+              ],
+            ),
 
             //* Back arrow background
-            const _CustomGradient(begin: Alignment.topLeft, stops: [
-              0.0,
-              0.3
-            ], colors: [
-              Colors.black87,
-              Colors.transparent,
-            ]),
+            const _CustomGradient(
+              begin: Alignment.topLeft,
+              stops: [0.0, 0.3],
+              colors: [
+                Colors.black87,
+                Colors.transparent,
+              ],
+            ),
           ],
         ),
       ),
@@ -244,6 +263,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
   }
 }
 
+//! Widget para crear un gradiente personalizado
 class _CustomGradient extends StatelessWidget {
   final AlignmentGeometry begin;
   final AlignmentGeometry end;
@@ -255,7 +275,11 @@ class _CustomGradient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
-      child: DecoratedBox(decoration: BoxDecoration(gradient: LinearGradient(begin: begin, end: end, stops: stops, colors: colors))),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: begin, end: end, stops: stops, colors: colors),
+        ),
+      ),
     );
   }
 }
