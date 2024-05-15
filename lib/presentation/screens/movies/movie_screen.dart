@@ -23,18 +23,25 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   void initState() {
     super.initState();
 
+    // "widget.movieId" es la propiedad que se le pasa al widget que tenemos justo arriba
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
     ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
   }
 
   @override
   Widget build(BuildContext context) {
+    // 1) Recogemos de la cache la película con el ID recibido "widget.movieId"
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
 
+    //! "PANTALLA DE CARGA" MIENTRAS SE OBTIENE EL OBJETO "movie"
+
+    // 2) Si no tenemos la película (porque no está en la caché y hay que consultarla a la API), mostramos un "Cargando..." mientras se completa el proceso
     if (movie == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator(strokeWidth: 2)));
     }
 
+    // 3) Cuando la película ya esté cargada (del cache o de la API), mostramos la pantalla de la película
+    //    Como el widget se refresca cada vez que hay cambios, se refrescará cuando la película haya sido cargada y el valor de "movie" haya cambiado de null a Movie
     return Scaffold(
       body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
