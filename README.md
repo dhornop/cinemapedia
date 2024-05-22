@@ -72,3 +72,25 @@ Estructura de ejemplo:
         - providers > storage
             - local_storage_provider.dart (Une 1 con 2)
             - favorite_movies_provider.dart
+
+        + screens > movies
+            + movie_screen.dart > (Buscar "Botón para añadir/quitar de favoritos")
+
+Al ejecutar la aplicación desde Visual Studio Code e instanciar por primera vez la base de datos, en la ventana de "Consola de depuración" se nos mostrará un enlace para poder visualizar la base de datos.
+
+# <span style="color: yellow">Tipos diferentes de Providers (Riverpod)</span>
+
+Hay múltiples tipos de providers para diferentes casos de uso.
+
+Con todos estos providers disponibles, a veces es difícil entender cuándo utilizar un tipo de provider sobre otro. Utiliza la tabla a continuación para elegir un provider que se adapte a lo que deseas proporcionar al árbol de widgets.
+
+| Tipo de Provider | Función de creación de Provider | Ejemplo de caso de uso |
+| -- | -- | -- |
+| [Provider](https://riverpod.dev/es/docs/providers/provider) | Retorna cualquier tipo | Una clase de servicio / propiedad calculada (lista filtrada) |
+| [StateProvider](https://riverpod.dev/es/docs/providers/state_provider) | Retorna cualquier tipo | Una condición de filtro / objeto de estado simple |
+| [FutureProvider](https://riverpod.dev/es/docs/providers/future_provider) | Retorna un Future de cualquier tipo | Un resultado de una llamada a una API |
+| [StreamProvider](https://pub.dev/documentation/riverpod/latest/riverpod/StreamProvider-class.html) | Retorna un Stream de cualquier tipo | Un stream de los resultados de una API |
+| [StateNotifierProvider](https://riverpod.dev/es/docs/providers/state_notifier_provider) | Retorna una subclase de StateNotifier | Un objeto de estado complejo que es inmutable excepto a través de una interfaz |
+
+
+

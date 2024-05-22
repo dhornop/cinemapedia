@@ -9,7 +9,6 @@ import "package:cinemapedia/domain/entities/movie.dart";
     1645: Movie,
     6523: Movie,
   }
-
 */
 
 final favoriteMoviesProvider = StateNotifierProvider<StorageMoviesNotifier, Map<int, Movie>>((ref) {

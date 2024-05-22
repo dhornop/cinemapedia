@@ -176,10 +176,17 @@ class _TitleAndOverview extends StatelessWidget {
   }
 }
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//! Pequeño Provider para saber si una película está en favoritos
+//? > Es "autoDispose" porque no necesitamos mantenerlo en memoria una vez que salimos de la pantalla.
+//?   Al cerrar y destruir el widget, se destruye el provider y se libera la memoria y lo deja en su estado inicial.
+//?   Si no lo hiciéramos, el provider se mantendría en memoria y mantendría su estado al volver a home y regresar a la misma película.
+//? > Es "family" porque nos permite recibir un argumento (un string, un int, un booleano, un objeto...)
 final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId) {
   final localStorageRepository = ref.watch(localStorageRepositoryProvider);
   return localStorageRepository.isMovieFavorite(movieId);
 });
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 class _CustomSliverAppBar extends ConsumerWidget {
   final Movie movie;
@@ -188,6 +195,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Referencia al provider que hemos declarado justo arriba
     final isFavoriteFuture = ref.watch(isFavoriteProvider(movie.id));
     final size = MediaQuery.of(context).size;
     final scaffoldBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
@@ -197,22 +205,31 @@ class _CustomSliverAppBar extends ConsumerWidget {
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
       actions: [
+        //! Botón para añadir/quitar de favoritos
         IconButton(
+          // Pulsación en el botón
           onPressed: () async {
-            // ref.read(localStorageRepositoryProvider)
-            //   .toggleFavorite(movie);
+            //? Versión sin Riverpod
+            //ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
+            //? Versión con Riverpod
             await ref.read(favoriteMoviesProvider.notifier).toggleFavorite(movie);
-
+            // Invalidamos el estado del provider y lo regresamos a su estado original.
+            // De esta forma, el estado original es: "Volver a consultar si es favorita"
+            // Al volverse a consultar, se actualiza isFavoriteFuture y se actualiza el ícono del botón
             ref.invalidate(isFavoriteProvider(movie.id));
           },
           icon: isFavoriteFuture.when(
+            //* Cuando estamos haciendo la petición...
+            //  (Es tan rápido que apenas se ve)
             loading: () => const CircularProgressIndicator(strokeWidth: 2),
+            //* Cuando ya tenemos la data...
+            //  Mostramos un ícono u otro dependiendo de si la película está en favoritos o no
             data: (isFavorite) => isFavorite ? const Icon(Icons.favorite_rounded, color: Colors.red) : const Icon(Icons.favorite_border),
+            //* Cuadno tenemos un error...
+            //  En este caso, no hacemos nada
+            //  _ es el error, __ es el stack trace
             error: (_, __) => throw UnimplementedError(),
           ),
-
-          // const Icon( Icons.favorite_border )
-          // icon: const Icon( Icons.favorite_rounded, color: Colors.red )
         )
       ],
       flexibleSpace: FlexibleSpaceBar(
