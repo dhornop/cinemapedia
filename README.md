@@ -65,16 +65,19 @@ Estructura de ejemplo:
             - local_storage_repository.dart
     - infrastructure
         - datasources
-            - isar_datasource.dart (1)
+            - isar_datasource.dart                  (1)
         - repositories
-            - local_storage_repository_impl.dart (2)
+            - local_storage_repository_impl.dart    (2)
     - presentation
         - providers > storage
-            - local_storage_provider.dart (Une 1 con 2)
-            - favorite_movies_provider.dart
+            - local_storage_provider.dart           (Provider genérico con los métodos definidos que une 1 con 2)
+            - favorite_movies_provider.dart         (Provider para el listado de películas favoritas)
 
         + screens > movies
-            + movie_screen.dart > (Buscar "Botón para añadir/quitar de favoritos")
+            + movie_screen.dart                     (Botón "Marcar favorito" > Buscar "Botón para añadir/quitar de favoritos")
+
+        + views > movies
+            + favorites_view.dart                   (Listado de películas favoritas)
 
 Al ejecutar la aplicación desde Visual Studio Code e instanciar por primera vez la base de datos, en la ventana de "Consola de depuración" se nos mostrará un enlace para poder visualizar la base de datos.
 

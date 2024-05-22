@@ -213,9 +213,9 @@ class _CustomSliverAppBar extends ConsumerWidget {
             //ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
             //? Versión con Riverpod
             await ref.read(favoriteMoviesProvider.notifier).toggleFavorite(movie);
-            // Invalidamos el estado del provider y lo regresamos a su estado original.
-            // De esta forma, el estado original es: "Volver a consultar si es favorita"
-            // Al volverse a consultar, se actualiza isFavoriteFuture y se actualiza el ícono del botón
+            //* Invalidamos el estado del provider y lo regresamos a su estado original.
+            //  De esta forma, el estado original es: "Volver a consultar si es favorita"
+            //  Al volverse a consultar, se actualiza isFavoriteFuture y se actualiza el ícono del botón
             ref.invalidate(isFavoriteProvider(movie.id));
           },
           icon: isFavoriteFuture.when(
