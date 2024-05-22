@@ -22,41 +22,47 @@ class IsarDatasource extends LocalStorageDatasource {
       return await Isar.open([MovieSchema], inspector: true, directory: dir.path);
     }
 
+    // Si la base de datos ya está abierta, devolvemos la instancia
     return Future.value(Isar.getInstance());
   }
 
   @override
   // Método para alternar el estado de favorito de una película
   Future<void> toggleFavorite(Movie movie) async {
-    final isar = await db;
+    final isar = await db; // Esperamos a que la base de datos esté lista
 
+    // Buscamos la película por su id (Campo "id": "id" + "EqualTo")
     final favoriteMovie = await isar.movies.filter().idEqualTo(movie.id).findFirst();
 
+    // Si la película es favorita, la borramos, si no, la insertamos
     if (favoriteMovie != null) {
-      // Borrar
+      // Borramos la película (deja de estar en favoritos)
       isar.writeTxnSync(() => isar.movies.deleteSync(favoriteMovie.isarId!));
       return;
+    } else {
+      // Insertamos la película (la añadimos a favoritos)
+      isar.writeTxnSync(() => isar.movies.putSync(movie));
     }
-
-    // Insertar
-    isar.writeTxnSync(() => isar.movies.putSync(movie));
   }
 
   @override
   // Método para verificar si una película es favorita
   Future<bool> isMovieFavorite(int movieId) async {
-    final isar = await db;
+    final isar = await db; // Esperamos a que la base de datos esté lista
 
+    // Buscamos la película por su id (Campo "id": "id" + "EqualTo")
     final Movie? isFavoriteMovie = await isar.movies.filter().idEqualTo(movieId).findFirst();
 
+    // Si la película es favorita (ha sido encontrada), devolvemos true, si no, false
     return isFavoriteMovie != null;
   }
 
   @override
   // Método para cargar las películas favoritas
   Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) async {
-    final isar = await db;
+    final isar = await db; // Esperamos a que la base de datos esté lista
 
+    // Devolvemos las películas favoritas, saltando las primeras "offset" y limitando a "limit"
     return isar.movies.where().offset(offset).limit(limit).findAll();
   }
 }

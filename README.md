@@ -55,3 +55,20 @@ App desarrollada durante el curso de Flutter de Fernando Herrera
 6. Ejecutar el comando generador de base de datos:
 
     > flutter pub run build_runner build
+
+Estructura de ejemplo:
+
+    - domain
+        - datasources
+            - local_storage_datasource.dart
+        - repositories
+            - local_storage_repository.dart
+    - infrastructure
+        - datasources
+            - isar_datasource.dart (1)
+        - repositories
+            - local_storage_repository_impl.dart (2)
+    - presentation
+        - providers > storage
+            - local_storage_provider.dart (Une 1 con 2)
+            - favorite_movies_provider.dart
