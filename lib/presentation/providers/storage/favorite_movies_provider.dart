@@ -39,7 +39,7 @@ class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
       tempMoviesMap[movie.id] = movie;
     }
 
-    // Emitimos un nuevo estado con las películas favoritas
+    // Finalmente, Emitimos un nuevo estado con las películas favoritas
     state = {...state, ...tempMoviesMap};
 
     return movies;

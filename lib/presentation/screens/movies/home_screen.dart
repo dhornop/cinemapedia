@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:cinemapedia/presentation/widgets/widgets.dart';
-import 'package:cinemapedia/presentation/views/views.dart';
+import "package:flutter/material.dart";
+import "package:cinemapedia/presentation/widgets/widgets.dart";
+import "package:cinemapedia/presentation/views/views.dart";
 
 class HomeScreen extends StatefulWidget {
-  static const name = 'home-screen';
+  static const name = "home-screen";
   final int pageIndex;
 
   const HomeScreen({super.key, required this.pageIndex});

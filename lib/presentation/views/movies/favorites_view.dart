@@ -38,6 +38,7 @@ class FavoritesViewState extends ConsumerState<FavoritesView> with AutomaticKeep
   Widget build(BuildContext context) {
     super.build(context);
 
+    // Obtenemos el mapa y lo convertimos en una lista
     final favoriteMovies = ref.watch(favoriteMoviesProvider).values.toList();
 
     if (favoriteMovies.isEmpty) {
